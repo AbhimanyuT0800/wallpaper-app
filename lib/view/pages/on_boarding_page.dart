@@ -3,6 +3,7 @@ import 'package:wallpaper_app/core/constants/app_strings.dart';
 import 'package:wallpaper_app/core/constants/app_urls.dart';
 import 'package:wallpaper_app/core/theme/colors/color_pallets.dart';
 import 'package:wallpaper_app/core/utils/dynamic_sizes.dart';
+import 'package:wallpaper_app/services/fetch_wallpapers_service.dart';
 import 'package:wallpaper_app/view/pages/home_page.dart';
 
 class OnBoardingPage extends StatelessWidget {
@@ -39,7 +40,9 @@ class OnBoardingPage extends StatelessWidget {
                 width: double.infinity,
                 height: context.screenHeight(70),
                 child: ElevatedButton(
-                  onPressed: () {
+                  onPressed: () async {
+                    await FetchWallpapersService().getWallpapers();
+
                     ///Navigate to home page
                     ///initalise fetching data from api
                     Navigator.pushNamedAndRemoveUntil(
