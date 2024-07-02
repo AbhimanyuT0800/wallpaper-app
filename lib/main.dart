@@ -11,6 +11,7 @@ void main() {
 }
 
 class MainApp extends StatelessWidget {
+  ///scaffoldmessenger key for pass context
   static final scaffoldMessngerKey = GlobalKey<ScaffoldMessengerState>();
   const MainApp({super.key});
 
@@ -28,7 +29,7 @@ class MainApp extends StatelessWidget {
       ),
       routes: {
         OnBoardingPage.routerPath: (context) => const OnBoardingPage(),
-        HomePage.routerPath: (context) => const HomePage(),
+        HomePage.routerPath: (context) => HomePage(),
       },
       onGenerateRoute: (settings) {
         /// pass argumentto the wallpaper details page

@@ -11,7 +11,8 @@ import 'package:wallpaper_app/view/widgets/listview_wallpapers_widget.dart';
 class HomePage extends HookConsumerWidget {
   // router path for navigation
   static const routerPath = '/HomePage';
-  const HomePage({super.key});
+  HomePage({super.key});
+  final scrollController = ScrollController();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -20,6 +21,38 @@ class HomePage extends HookConsumerWidget {
     /// by default listview shown
     ValueNotifier<bool> isListView = useState<bool>(true);
 
+    final photos = ref.watch(fetchWallpapersProvider);
+
+    useEffect(
+      () {
+        // checks scroll controller wether it is reaached bottom or not
+        scrollController.addListener(
+          () {
+            if (scrollController.position.atEdge) {
+              bool isTop = scrollController.position.pixels == 0;
+              if (!isTop) {
+                /// if it is reched bottom add one more page
+                /// and add one more page to the state : list of wallpapers
+
+                ref.watch(limitOfWallpaperProvider.notifier).state += 1;
+
+                ref
+                    .watch(fetchWallpapersProvider.notifier)
+                    .addMorePhotos(ref.read(limitOfWallpaperProvider));
+              }
+            }
+          },
+        );
+
+        return null;
+      },
+    );
+
+    ///when the state of photos is empty
+    ///call addMore photos metod once
+    if (photos.isEmpty) {
+      ref.watch(fetchWallpapersProvider.notifier).addMorePhotos(1);
+    }
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -28,32 +61,22 @@ class HomePage extends HookConsumerWidget {
           style: TextStyle(color: ColorPallets.primaryColor),
         ),
       ),
-      body: ref.watch(fetchWallpapersProvider).when(
-            data: (data) {
-              return Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: context.screenWidth(50),
-                ),
+      body: Padding(
+        padding: EdgeInsets.symmetric(
+          horizontal: context.screenWidth(50),
+        ),
 
-                ///Chose how home screen should shows
-                child: isListView.value
-                    ? ListViewWallpapersWidget(data: data)
-                    : GridviewWallpapersWidget(data: data),
-              );
-            },
-
-            /// error widget
-            /// when error occures [error] shows as a text
-            error: (error, stackTrace) => Center(
-              child: Text(error.toString()),
-            ),
-
-            ///Loading widget
-            ///simple circularProgressIndicator shows
-            loading: () => const Center(
-              child: CircularProgressIndicator(),
-            ),
-          ),
+        ///Chose how home screen should shows
+        child: isListView.value
+            ? ListViewWallpapersWidget(
+                photos: photos,
+                controller: scrollController,
+              )
+            : GridviewWallpapersWidget(
+                photos: photos,
+                controller: scrollController,
+              ),
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           /// toggle the value of isListView

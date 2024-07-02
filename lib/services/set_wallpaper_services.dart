@@ -16,7 +16,7 @@ class SetWallpaperServices {
       bool result = await WallpaperHandler.instance
           .setWallpaperFromFile(file.path, location);
       log(result.toString());
-      // show a snakbar after setting the wallpapet
+      // show a snakbar after setting the wallpaper
       if (result) {
         SnackbarUtils.showSnakBar('Wallpaper successfully set....');
       }

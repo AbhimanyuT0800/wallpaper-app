@@ -41,8 +41,6 @@ class OnBoardingPage extends StatelessWidget {
                 height: context.screenHeight(70),
                 child: ElevatedButton(
                   onPressed: () async {
-                    await FetchWallpapersService().getWallpapers();
-
                     ///Navigate to home page
                     ///initalise fetching data from api
                     Navigator.pushNamedAndRemoveUntil(
