@@ -31,6 +31,7 @@ class MainApp extends StatelessWidget {
         HomePage.routerPath: (context) => const HomePage(),
       },
       onGenerateRoute: (settings) {
+        /// pass argumentto the wallpaper details page
         if (settings.name == WallpaperDetailsPage.routerPath) {
           final args = settings.arguments as Photo;
 
@@ -42,6 +43,7 @@ class MainApp extends StatelessWidget {
             },
           );
         }
+
         return null;
       },
       initialRoute: OnBoardingPage.routerPath,

@@ -7,8 +7,7 @@ class FetchWallpapersService {
   final Dio _dio = Dio();
   Future<WallpaperModel> getWallpapers() async {
     try {
-      _dio.options.headers["Authorization"] =
-          'YG1WiehExJrl1xUnY7tWQs8GqmnZkMIZnjkaW9pRFwQE2wD2oiTym3NL';
+      _dio.options.headers["Authorization"] = AppUrls.apiKey;
       Response response = await _dio
           .get(AppUrls.apiBaseUrl, queryParameters: {'page': 1, 'per_page': 5});
       if (response.statusCode == 200) {

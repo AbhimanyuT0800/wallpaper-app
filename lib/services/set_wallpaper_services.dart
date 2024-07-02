@@ -1,7 +1,7 @@
+import 'dart:developer';
 import 'dart:io';
 
-import 'package:flutter/material.dart';
-import 'package:wallpaper_app/main.dart';
+import 'package:wallpaper_app/core/utils/snakbar.dart';
 import 'package:wallpaper_handler/wallpaper_handler.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 
@@ -15,15 +15,15 @@ class SetWallpaperServices {
       File file = await DefaultCacheManager().getSingleFile(url);
       bool result = await WallpaperHandler.instance
           .setWallpaperFromFile(file.path, location);
+      log(result.toString());
       // show a snakbar after setting the wallpapet
       if (result) {
-        MainApp.scaffoldMessngerKey.currentState!.showSnackBar(
-            const SnackBar(content: Text('Wallpaper successfully set....')));
+        SnackbarUtils.showSnakBar('Wallpaper successfully set....');
       }
     } catch (e) {
+      log(e.toString());
       //show a snakbar with error message for the user
-      MainApp.scaffoldMessngerKey.currentState!
-          .showSnackBar(SnackBar(content: Text(e.toString())));
+      SnackbarUtils.showSnakBar(e.toString());
     }
   }
 }

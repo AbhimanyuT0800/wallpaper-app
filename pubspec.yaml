@@ -11,9 +11,11 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_cache_manager: ^3.3.2
+  flutter_hooks: ^0.20.5
   flutter_riverpod: ^2.5.1
   freezed: ^2.5.3
   freezed_annotation: ^2.4.1
+  hooks_riverpod: ^2.5.1
   riverpod_annotation: ^2.3.5
   wallpaper_handler: ^0.0.2
 
