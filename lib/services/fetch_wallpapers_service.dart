@@ -1,25 +1,25 @@
-import 'dart:developer';
-
 import 'package:dio/dio.dart';
 import 'package:wallpaper_app/core/constants/app_urls.dart';
+import 'package:wallpaper_app/core/exception/base_exception.dart';
 import 'package:wallpaper_app/model/wallpaper_model/wallpaper_model.dart';
 
 class FetchWallpapersService {
   final Dio _dio = Dio();
-  getWallpapers() async {
+  Future<WallpaperModel> getWallpapers() async {
     try {
       _dio.options.headers["Authorization"] =
           'YG1WiehExJrl1xUnY7tWQs8GqmnZkMIZnjkaW9pRFwQE2wD2oiTym3NL';
-      Response response = await _dio.get(AppUrls.apiBaseUrl,
-          queryParameters: {'page': 1, 'per_page': 10});
+      Response response = await _dio
+          .get(AppUrls.apiBaseUrl, queryParameters: {'page': 1, 'per_page': 5});
       if (response.statusCode == 200) {
-        final data = WallpaperModel.fromJson(response.data);
-        log(data.photos[0].photographerUrl);
+        return WallpaperModel.fromJson(response.data);
       } else {
-        log(response.statusCode.toString());
+        throw BaseException(
+            message:
+                'Somthing Went wrong... statusCode : ${response.statusCode}');
       }
     } catch (e) {
-      log(e.toString());
+      throw BaseException(message: 'Somthing Went wrong..... !${e.toString()}');
     }
   }
 }
