@@ -35,6 +35,9 @@ class ListViewWallpapersWidget extends StatelessWidget {
                     ),
                   ),
                 )
+
+              /// when reached the bottom of the list shows a circularProgerss indicator
+              /// for delay when new data reach the list
               : const Center(child: CircularProgressIndicator());
         },
         separatorBuilder: (context, index) => const SizedBox(

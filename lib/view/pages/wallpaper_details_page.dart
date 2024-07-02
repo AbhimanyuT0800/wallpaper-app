@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wallpaper_app/controller/set_wallpaper_controller/set_wallpaper_provider.dart';
+import 'package:wallpaper_app/core/constants/app_strings.dart';
 import 'package:wallpaper_app/core/theme/colors/color_pallets.dart';
 import 'package:wallpaper_app/core/utils/dynamic_sizes.dart';
 import 'package:wallpaper_app/model/wallpaper_model/wallpaper_model.dart';
@@ -18,27 +19,39 @@ class WallpaperDetailsPage extends ConsumerWidget {
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
+          icon: const Icon(Icons.arrow_back_ios, color: ColorPallets.grey700),
           onPressed: () {
             ///back button for navigate to home screen
             Navigator.pop(context);
           },
         ),
         actions: [
+          ///Choose where should the wallpaper set
           PopupMenuButton<String>(
-            icon: const Icon(Icons.more_vert, color: ColorPallets.grey700),
+            icon: const Row(
+              children: [
+                Text(
+                  AppStrings.txtSet,
+                  style: TextStyle(color: ColorPallets.grey700, fontSize: 16),
+                ),
+                Icon(
+                  Icons.keyboard_arrow_down,
+                  size: 24,
+                )
+              ],
+            ),
             onSelected: (value) {
-              if (value == 'homeScreen') {
+              if (value == AppStrings.txtHomeScreen) {
                 // Set current image home screen wallpaper
                 ref.watch(setWallpaperProvider(
                     location: WallpaperLocation.homeScreen,
                     url: photo.src.original));
-              } else if (value == 'LockScreen') {
+              } else if (value == AppStrings.txtLockScreen) {
                 // Set current image lock screen wallpaper
                 ref.watch(setWallpaperProvider(
                     location: WallpaperLocation.lockScreen,
                     url: photo.src.original));
-              } else if (value == 'BothScreen') {
+              } else if (value == AppStrings.txtBothScreen) {
                 // Set current image both home screen and lock screen wallpaper
                 ref.watch(setWallpaperProvider(
                     location: WallpaperLocation.bothScreens,
@@ -48,15 +61,16 @@ class WallpaperDetailsPage extends ConsumerWidget {
             itemBuilder: (BuildContext context) {
               return [
                 const PopupMenuItem(
-                  value: 'homeScreen',
-                  child: Text('set as Home Screen'),
+                  value: AppStrings.txtHomeScreen,
+                  child: Text(AppStrings.txtHomeScreen),
                 ),
                 const PopupMenuItem(
-                  value: 'LockScreen',
-                  child: Text('Set as Lock Screen'),
+                  value: AppStrings.txtLockScreen,
+                  child: Text(AppStrings.txtLockScreen),
                 ),
                 const PopupMenuItem(
-                    value: 'BothScreen', child: Text('Set as Both Screen'))
+                    value: AppStrings.txtBothScreen,
+                    child: Text(AppStrings.txtBothScreen))
               ];
             },
           ),

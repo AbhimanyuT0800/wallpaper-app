@@ -18,6 +18,8 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
+
       scaffoldMessengerKey: scaffoldMessngerKey,
 
       /// set font family default through out the app
@@ -32,7 +34,7 @@ class MainApp extends StatelessWidget {
         HomePage.routerPath: (context) => HomePage(),
       },
       onGenerateRoute: (settings) {
-        /// pass argumentto the wallpaper details page
+        /// pass argument to the wallpaper details page
         if (settings.name == WallpaperDetailsPage.routerPath) {
           final args = settings.arguments as Photo;
 
