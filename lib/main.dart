@@ -11,11 +11,14 @@ void main() {
 }
 
 class MainApp extends StatelessWidget {
+  static final scaffoldMessngerKey = GlobalKey<ScaffoldMessengerState>();
   const MainApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      scaffoldMessengerKey: scaffoldMessngerKey,
+
       /// set font family default through out the app
       /// set scaffold background
       theme: ThemeData(
